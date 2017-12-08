@@ -9,7 +9,7 @@ function removeBlockParams(sys)
         try
          set_param(allBlocks(i), 'BlockDescription', '');
         catch
-            % For masked blocks this is a read-only param
+            % For masked blocks this is a read-only parameter
         end
         
         % Subsystem specific
