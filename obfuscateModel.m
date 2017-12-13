@@ -10,8 +10,7 @@ function obfuscateModel(sys)
     % Remove parameters
     removeLinks(sys) % Takes care of custom blocks
     removeMasks(sys)
-    removeBlockColors(sys)
-    removeAnnotationColors(sys)
+    removeColors(sys)
     removeBlockParams(sys)  % might affect codegen
     removeCustomDataTypes(sys) % will probably affect functionality
     removeSignalNames(sys)
