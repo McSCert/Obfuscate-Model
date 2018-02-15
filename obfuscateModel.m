@@ -4,7 +4,7 @@ function obfuscateModel(sys)
     % fixEnums(sys) % this is taken care of in removeBlockFunctions
     
     % Disable links
-    removeLinks(sys) % Takes care of custom blocks
+    removeLinks(sys) % Takes care of custom blocks and libraries
     
     % Delete blocks
     removeAnnotations(sys)
@@ -27,4 +27,5 @@ function obfuscateModel(sys)
     renameGotoTags(sys)
     renameGotos(sys)
     renameDSs(sys)
+    renameLinks(sys)
 end

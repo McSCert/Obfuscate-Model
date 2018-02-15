@@ -1,14 +1,18 @@
 function removeModelInformation(sys)
 % REMOVEMODELINFORMATION Reset the model information.
 
-    set_param(sys, 'Creator', 'user');
-    set_param(sys, 'LastModifiedBy', 'user');
+    date = datestr(now, 'ddd mmm dd HH:MM:SS yyyy');
+    date = reshape(date, 1, length(date));
+    name = 'user';
     
-    date = datestr(now,'ddd mmm dd HH:MM:SS yyyy')';
+    % Change usernames
+    set_param(sys, 'ModifiedByFormat', name); % Changes Creator and LastModifiedBy also, but only after saving
+    set_param(sys, 'Creator', name);
+    
+    % Change dates
     set_param(sys, 'Created', date);
-    set_param(sys, 'LastModifiedDate', date);
-    
+    set_param(sys, 'ModifiedDateFormat', date); % Changes LastModifiedDate also, but only after saving
     set_param(sys, 'ModifiedComment', '');
     set_param(sys, 'ModifiedHistory', '');
-    set_param(sys, 'ModelVersion', '1.0');       
+    set_param(sys, 'ModelVersionFormat', '1.0'); % Changes ModelVersion also, but only after saving  
 end
