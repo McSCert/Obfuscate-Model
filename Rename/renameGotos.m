@@ -7,7 +7,13 @@ function renameGotos(sys)
     n = 1;
     for i = 1:length(gotos)
         set_param(gotos{i}, 'ShowName', 'on');
-        set_param(gotos{i}, 'HideAutomaticName', 'off');
+        try
+            set_param(gotos{i}, 'HideAutomaticName', 'off');
+        catch ME
+            if ~strcmp(ME.identifier, 'Simulink:Commands:ParamUnknown')
+                rethrow(ME)
+            end
+        end
         
         changed = false;
         while(~changed)
@@ -25,7 +31,13 @@ function renameGotos(sys)
     n = 1;
     for i = 1:length(froms)
         set_param(froms{i}, 'ShowName', 'on');
-        set_param(froms{i}, 'HideAutomaticName', 'off');
+        try
+            set_param(froms{i}, 'HideAutomaticName', 'off');
+        catch ME
+            if ~strcmp(ME.identifier, 'Simulink:Commands:ParamUnknown')
+                rethrow(ME)
+            end
+        end
         
         changed = false;
         while(~changed)

@@ -3,12 +3,14 @@ function obfuscateModel(sys)
     % FCA specific
     % fixEnums(sys) % this is taken care of in removeBlockFunctions
     
+    % Disable links
+    removeLinks(sys) % Takes care of custom blocks
+    
     % Delete blocks
     removeAnnotations(sys)
     removeDocBlocks(sys)
     
     % Remove parameters
-    removeLinks(sys) % Takes care of custom blocks
     removeMasks(sys)
     removeColors(sys)
     removeBlockParams(sys)  % might affect codegen

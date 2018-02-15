@@ -9,8 +9,13 @@ function renameDSs(sys)
      	writes = find_system(sys, 'LookUnderMasks', 'all', 'FollowLinks', 'on', 'BlockType', 'DataStoreWrite', 'DataStoreName', datastorename);
         reads = find_system(sys, 'LookUnderMasks', 'all', 'FollowLinks', 'on', 'BlockType', 'DataStoreMemory', 'DataStoreName', datastorename);
         
-        set_param(datastores{i}, 'DataStoreName', ['DataStore' num2str(i)]);   
-        set_param(writes{i}, 'DataStoreName', ['DataStore' num2str(i)]);
-        set_param(reads{i}, 'DataStoreName', ['DataStore' num2str(i)]);
+        set_param(datastores{i}, 'DataStoreName', ['DataStore' num2str(i)]);
+        
+        for j = 1:length(writes)
+            set_param(writes{j}, 'DataStoreName', ['DataStore' num2str(i)]);
+        end
+        for j = 1:length(reads)
+            set_param(reads{j}, 'DataStoreName', ['DataStore' num2str(i)]);
+        end
     end
 end

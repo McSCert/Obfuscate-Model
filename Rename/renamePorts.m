@@ -6,7 +6,13 @@ function renamePorts(sys)
     for i = 1:length(blocks)
         set_param(blocks(i), 'Name', ['Inport' num2str(i)]);
         set_param(blocks(i), 'ShowName', 'on');
-        set_param(blocks(i), 'HideAutomaticName', 'off');
+        try
+            set_param(blocks(i), 'HideAutomaticName', 'off');
+        catch ME
+            if ~strcmp(ME.identifier, 'Simulink:Commands:ParamUnknown')
+                rethrow(ME)
+            end
+        end
     end
     
     % Outports
@@ -14,6 +20,12 @@ function renamePorts(sys)
     for j = 1:length(blocks)
         set_param(blocks(j), 'Name', ['Outport' num2str(j)]);
         set_param(blocks(j), 'ShowName', 'on');
-        set_param(blocks(j), 'HideAutomaticName', 'off');
+        try
+            set_param(blocks(j), 'HideAutomaticName', 'off');
+        catch ME
+            if ~strcmp(ME.identifier, 'Simulink:Commands:ParamUnknown')
+                rethrow(ME)
+            end
+        end
     end
 end
