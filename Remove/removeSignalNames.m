@@ -1,11 +1,16 @@
 function removeSignalNames(sys)
 % REMOVESIGNALNAMES Remove signal names and turn off signal propagation.
+% NOTE: This does not work for signals of buses.
 
     % Lines
     lines = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'type', 'line');
     for i = 1:length(lines)
-        set(lines(i), 'SignalPropagation', 'off');
-        set(lines(i), 'Name', '');
+        try
+            set(lines(i), 'SignalPropagation', 'off');
+            set(lines(i), 'Name', '');
+        catch
+            % Bus signal
+        end
     end
     
     % Ports

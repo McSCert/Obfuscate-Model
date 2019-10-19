@@ -1,8 +1,34 @@
 function renameSubsystems(sys)
 % RENAMESUBSYSTEMS Give all subsystems generic names. Should be run from the
 % root.
-    allBlks = find_system(sys, 'LookUnderMasks', 'all', 'FollowLinks', 'on', 'BlockType', 'SubSystem');
-    for i = length(allBlks):-1:1 % Need to go backwards, otherwise allBlks will be not up to date
-        set_param(allBlks{i}, 'Name', ['Subsystem' num2str(i)]);
+    allSubystems = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'BlockType', 'SubSystem', 'IsSimulinkFunction', 'off');
+    allSimFuncs  = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'BlockType', 'SubSystem', 'IsSimulinkFunction', 'on');
+    
+    % Subsystems
+    for i = length(allSubystems):-1:1 % Need to go backwards, otherwise paths will be out of date
+        changed = false;
+        num = 1;
+        while ~changed
+            try
+                set_param(allSubystems{i}, 'Name', ['Subsystem' num2str(num)]);
+                changed = true;
+            catch
+                num = num + 1;
+            end
+        end
+    end
+    
+    % Simulink Functions
+    for j = length(allSimFuncs):-1:1
+        changed = false;
+        num = 1;
+        while ~changed
+            try
+                set_param(allSimFuncs{j}, 'Name', ['Simulink Function' num2str(num)]);
+                changed = true;
+            catch
+                num = num + 1;
+            end
+        end
     end
 end

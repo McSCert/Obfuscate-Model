@@ -1,7 +1,4 @@
 function obfuscateModel(sys)
-
-    % FCA specific
-    % fixEnums(sys) % this is taken care of in removeBlockFunctions
     
     % Disable links
     removeLinks(sys) % Takes care of custom blocks and libraries
@@ -13,7 +10,7 @@ function obfuscateModel(sys)
     % Remove parameters
     removeMasks(sys)
     removeColors(sys)
-    removeBlockParams(sys)  % might affect codegen
+    removeBlockParams(sys)     % might affect codegen
     removeCustomDataTypes(sys) % will probably affect functionality
     removeSignalNames(sys)
     removeBlockFunctions(sys)
@@ -22,6 +19,7 @@ function obfuscateModel(sys)
     
     % Rename
     renameSubsystems(sys)
+    renameStateflow(sys)
     renamePorts(sys)
     renameConstants(sys)
     renameGotoTags(sys)
