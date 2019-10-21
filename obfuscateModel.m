@@ -1,12 +1,12 @@
 function obfuscateModel(sys)
-    
+
     % Disable links
-    removeLinks(sys) % Takes care of custom blocks and libraries
-    
+    removeLinks(sys)
+
     % Delete blocks
     removeAnnotations(sys)
     removeDocBlocks(sys)
-    
+
     % Remove parameters
     removeMasks(sys)
     removeColors(sys)
@@ -16,7 +16,7 @@ function obfuscateModel(sys)
     removeBlockFunctions(sys)
     removeDescriptions(sys)
     %removeModelInformation(sys) % doesnt work
-    
+
     % Rename
     renameSubsystems(sys)
     renameStateflow(sys)

@@ -1,5 +1,5 @@
 function renameGotos(sys)
-% RENAMEGOTOS Give all goto/froms generic names. 
+% RENAMEGOTOS Give all goto/froms generic names (not tags). 
 % Should be run from the root to avoid overlapping names.
 
     % Gotos
@@ -14,7 +14,7 @@ function renameGotos(sys)
                 rethrow(ME)
             end
         end
-        
+
         changed = false;
         while(~changed)
             try
@@ -25,9 +25,9 @@ function renameGotos(sys)
             changed = true;
         end
     end
-    
+
     % Froms
-    froms = find_system(sys, 'LookUnderMasks', 'all', 'FollowLinks', 'on', 'BlockType', 'From');   
+    froms = find_system(sys, 'LookUnderMasks', 'all', 'FollowLinks', 'on', 'BlockType', 'From');
     n = 1;
     for i = 1:length(froms)
         set_param(froms{i}, 'ShowName', 'on');
@@ -38,7 +38,7 @@ function renameGotos(sys)
                 rethrow(ME)
             end
         end
-        
+
         changed = false;
         while(~changed)
             try
