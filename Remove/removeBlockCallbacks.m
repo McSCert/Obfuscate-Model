@@ -1,6 +1,6 @@
 function removeBlockCallbacks(sys)
-% REMOVEMASKS Clear the various callback parameters on blocks. These parameters
-% may include custom scripts.
+% REMOVEBLOCKCALLBACKS Clear the various callback parameters on blocks. 
+% These parameters may include custom scripts.
 %
 % See: https://www.mathworks.com/help/simulink/ug/block-callbacks.html
 
