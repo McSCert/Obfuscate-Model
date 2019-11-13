@@ -1,6 +1,8 @@
-function removeBlockFunctions(sys)
-% REMOVEMASKS Clear the various function parameters on blocks. These parameters
+function removeBlockCallbacks(sys)
+% REMOVEMASKS Clear the various callback parameters on blocks. These parameters
 % may include custom scripts.
+%
+% See: https://www.mathworks.com/help/simulink/ug/block-callbacks.html
 
     blocks = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'type', 'block');
     for i = 1:length(blocks)
