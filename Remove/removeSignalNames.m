@@ -12,13 +12,19 @@ function removeSignalNames(sys)
             % Bus signal
         end
     end
-    
+
     % Ports
     blocks = find_system(sys, 'LookUnderMasks', 'all', 'FollowLinks', 'on', 'type', 'block');
     for j = 1:length(blocks)
          pc = get_param(gcb, 'PortHandles');
          for k = 1:length(pc.Outport)
-             set_param(pc.Outport(k), 'ShowPropagatedSignals', 'off')
+             try
+                set_param(pc.Outport(k), 'ShowPropagatedSignals', 'off')
+             catch me
+                 if ~strcmp(me.identifier, 'Simulink:Signals:NoPropSigLabThroughBlock')
+                     rethrow(me)
+                 end
+             end
          end
     end
 end
