@@ -1,5 +1,7 @@
 function removeModelInformation(sys)
-% REMOVEMODELINFORMATION Reset the model information.
+% REMOVEMODELINFORMATION Reset the model information found in
+% Model Properties > Main and Model Properties > History. The model must be
+% saved in order for some changes to take effect (i.e., LastModifiedBy data).
 
     date = datestr(now, 'ddd mmm dd HH:MM:SS yyyy');
     date = reshape(date, 1, length(date));
