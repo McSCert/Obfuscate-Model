@@ -1,5 +1,5 @@
 function removeLinks(sys)
-% REMOVELINKS Reset block and library links. Links can be used to reference custom
+% REMOVELINKS Break block and library links. Links can be used to reference custom
 % blocks or other models/libraries that should not be provided.
 
     blocks = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'type', 'block');
