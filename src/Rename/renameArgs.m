@@ -22,7 +22,7 @@ function renameArgs(sys)
             end
         end
         % Update the function callers that use the argument
-        updateCallers(callers, oldName, newName);
+        updateCallerArgs(callers, oldName, newName);
     end
 
     % Argument Outputs
@@ -41,47 +41,6 @@ function renameArgs(sys)
                 num = num + 1;
             end
         end
-        updateCallers(callers, oldName, newName);
-    end
-end
-
-function callers = getCallers(argument)
-    % Get the Simulink Function for the current argumet - should be parent
-    simFcn = get_param(argument, 'Parent');
-    % Get the callers if that parent is a Simulink Function
-    if strcmp(get_param(simFcn, 'IsSimulinkFunction'), 'on') == 1
-        callers = findCallers(simFcn);
-    end
-end
-
-function updateCallers(callers, oldName, newName)
-    % Update the function prototype for each caller
-    for i = 1:length(callers)
-        oldPrototype = get_param(callers{i}, 'FunctionPrototype');
-        newPrototype = oldPrototype;
-        argumentScenario = 1;
-        while strcmp(oldPrototype, newPrototype) == 1
-            switch argumentScenario
-                case 1
-                    newPrototype = strrep(oldPrototype, ['[' oldName ','], ['[' newName ',']);
-                case 2
-                    newPrototype = strrep(oldPrototype, [',' oldName ','], [',' newName ',']);
-                case 3
-                    newPrototype = strrep(oldPrototype, [',' oldName ']'], [',' newName ']']);
-                case 4
-                    newPrototype = strrep(oldPrototype, ['(' oldName ','], ['(' newName ',']);
-                case 5
-                    newPrototype = strrep(oldPrototype, [',' oldName ')'], [',' newName ')']);
-                case 6
-                    newPrototype = strrep(oldPrototype, ['(' oldName ')'], ['(' newName ')']);
-                case 7
-                    newPrototype = strrep(oldPrototype, [oldName ' '], [newName '']);
-                otherwise
-                    disp('Argument not found in prototype.')
-                    return;
-            end
-            argumentScenario = argumentScenario + 1;
-        end
-        set_param(callers{i}, 'FunctionPrototype', newPrototype);
+        updateCallerArgs(callers, oldName, newName);
     end
 end
