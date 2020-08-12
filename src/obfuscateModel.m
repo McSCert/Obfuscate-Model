@@ -45,6 +45,7 @@ function obfuscateModel(sys, varargin)
     renamegotofromtag       = getInput('renamegotofromtag', varargin, default);
     renamedatastorename     = getInput('renamedatastorename', varargin, default);
     renametriggers          = getInput('renametriggers', varargin, default); 
+    renamearguments         = getInput('renamearguments', varargin, default);
     
     % Stateflow
     sfcharts                = getInput('sfcharts', varargin, default);
@@ -124,6 +125,10 @@ function obfuscateModel(sys, varargin)
     
     if renametriggers
         renameTriggers(sys);
+    end
+    
+    if renamearguments
+        renameArgs(sys);
     end
     
     renameStateflow(sys, 'sfcharts', sfcharts, 'sfports', sfports, 'sfevents', sfevents, 'sfstates', sfstates, 'sfboxes', sfboxes);
