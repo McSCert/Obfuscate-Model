@@ -9,8 +9,8 @@ function renameArgs(sys)
     for i = 1:length(allArgIns)
         changed = false;
         num = 1;
-        callers = getCallers(allArgIns(i));
-        oldName = get_param(allArgIns(i), 'ArgumentName');
+        simFcn = get_param(allArgIns(i), 'Parent');
+        callers = findCallers(simFcn);
         while ~changed
             try
                 newName = ['u' num2str(num)];
@@ -22,15 +22,17 @@ function renameArgs(sys)
             end
         end
         % Update the function callers that use the argument
-        updateCallerArgs(callers, oldName, newName);
+        if ~isempty(callers)
+            updateCallers(simFcn, callers);
+        end
     end
 
     % Argument Outputs
     for j = 1:length(allArgOuts)
         changed = false;
         num = 1;
-        callers = getCallers(allArgOuts(j));
-        oldName = get_param(allArgOuts(j), 'ArgumentName');
+        simFcn = get_param(allArgOuts(j), 'Parent');
+        callers = findCallers(simFcn);
         while ~changed
             try
                 newName = ['y' num2str(num)];
@@ -41,6 +43,8 @@ function renameArgs(sys)
                 num = num + 1;
             end
         end
-        updateCallerArgs(callers, oldName, newName);
+        if ~isempty(callers)
+            updateCallers(simFcn, callers);
+        end
     end
 end
