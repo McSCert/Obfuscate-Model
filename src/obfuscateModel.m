@@ -1,4 +1,4 @@
-function obfuscateModel(sys, varargin)
+function obfuscateModel(sys, parentSys, varargin)
 % OBFUSCATEMODEL Obfuscate a Simulink model such that application-specific or
 % company-specific details are removed.
 %
@@ -20,6 +20,10 @@ function obfuscateModel(sys, varargin)
         default = 1;
     else
         default = 0;
+    end
+    
+    if ~exist('parentSys', 'var')
+        parentSys = [];
     end
     
     %% Manage parameters
@@ -65,8 +69,9 @@ function obfuscateModel(sys, varargin)
             for i = 1:length(refs)
                 modelName = get_param(refs{i}, 'ModelName');
                 load_system(modelName);
-                obfuscateModel(modelName, varargin{:});
+                obfuscateModel(modelName, sys, varargin{:});
                 save_system(modelName);
+                close_system(modelName);
                 Simulink.ModelReference.refresh(refs{i});
             end
         end
@@ -146,11 +151,11 @@ function obfuscateModel(sys, varargin)
     end
     
     if renamearguments
-        renameArgs(sys);
+        renameArgs(sys, parentSys);
     end
     
     if renamefunctions
-        renameSimFcns(sys);
+        renameSimFcns(sys, parentSys);
     end
     
     renameStateflow(sys, 'sfcharts', sfcharts, 'sfports', sfports, 'sfevents', sfevents, 'sfstates', sfstates, 'sfboxes', sfboxes);
