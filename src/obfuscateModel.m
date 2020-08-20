@@ -54,8 +54,25 @@ function obfuscateModel(sys, varargin)
     sfevents                = getInput('sfevents', varargin, default);
     sfstates                = getInput('sfstates', varargin, default);
     sfboxes                 = getInput('sfboxes', varargin, default);
-        
-    %% Perform obfuscation
+    
+    % Recursion
+    recursemodels           = getInput('recursemodels', varargin, default);
+    
+    %% Recurse Model References
+    if recursemodels
+        refs = find_system(sys, 'BlockType', 'ModelReference');
+        if ~isempty(refs)
+            for i = 1:length(refs)
+                modelName = get_param(refs{i}, 'ModelName');
+                load_system(modelName);
+                obfuscateModel(modelName, varargin{:});
+                save_system(modelName);
+                Simulink.ModelReference.refresh(refs{i});
+            end
+        end
+    end
+    
+    %% Perform Obfucsation
     % Remove parameters and blocks
     if removemasks
         removeMasks(sys)
