@@ -1,4 +1,4 @@
-function renameArgs(sys)
+function renameArgs(sys, parentSys)
 % RENAMEARGS Give all Simulink Function arguments generic names
     allArgIns   = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', ...
                              'BlockType', 'ArgIn');
@@ -10,7 +10,7 @@ function renameArgs(sys)
         changed = false;
         num = 1;
         simFcn = get_param(allArgIns(i), 'Parent');
-        callers = findCallers(simFcn);
+        callers = findCallers(simFcn, parentSys);
         while ~changed
             try
                 newName = ['u' num2str(num)];
@@ -23,7 +23,7 @@ function renameArgs(sys)
         end
         % Update the function callers that use the argument
         if ~isempty(callers)
-            updateCallers(simFcn, callers);
+            updateCallers(simFcn, callers, [], parentSys);
         end
     end
 
@@ -32,7 +32,7 @@ function renameArgs(sys)
         changed = false;
         num = 1;
         simFcn = get_param(allArgOuts(j), 'Parent');
-        callers = findCallers(simFcn);
+        callers = findCallers(simFcn, parentSys);
         while ~changed
             try
                 newName = ['y' num2str(num)];
@@ -44,7 +44,7 @@ function renameArgs(sys)
             end
         end
         if ~isempty(callers)
-            updateCallers(simFcn, callers);
+            updateCallers(simFcn, callers, [], parentSys);
         end
     end
 end
