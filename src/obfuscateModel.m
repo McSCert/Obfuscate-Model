@@ -30,7 +30,8 @@ function obfuscateModel(sys, parentSys, varargin)
     % Simulink
     %   Remove
     removemasks             = getInput('removemasks', varargin, default);
-    removelinks             = getInput('removelinks', varargin, default);
+    removelibrarylinks      = getInput('removelibrarylinks', varargin, default);
+    removemodelreferences   = getInput('removemodereferences', varargin, default); 
     removesignalnames       = getInput('removesignalnames', varargin, default);
     removedocblocks         = getInput('removedocblocks', varargin, default);
     removeannotations       = getInput('removeannotations', varargin, default);
@@ -83,8 +84,12 @@ function obfuscateModel(sys, parentSys, varargin)
         removeMasks(sys)
     end
     
-    if removelinks
+    if removelibrarylinks
         removeLinks(sys)
+    end
+    
+    if removemodelreferences
+        removeModelReferences(sys)
     end
 
     if removesignalnames
