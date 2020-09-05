@@ -4,8 +4,9 @@ function obfuscateModel(sys, parentSys, varargin)
 %
 %   Inputs:
 %       sys         Model name.
+%       parentSys   Parent model name. [Optional]
 %       varargin    Parameter names and values for specifying what elements of
-%                   the model are affected.
+%                   the model are affected. [Optional]
 %
 %   Outputs:
 %       N/A
@@ -13,8 +14,10 @@ function obfuscateModel(sys, parentSys, varargin)
 %   Side Effects:
 %       Modified model
 %
+%   Example:
+%       obfuscateModel(gcs, [], {'removecolorblocks', 1})
     
-    % If not args are given, run all checks. 
+    % If no args are given, run all checks. 
     % If some args are given, only run those enabled.
     if isempty(varargin)
         default = 1;
@@ -31,7 +34,7 @@ function obfuscateModel(sys, parentSys, varargin)
     %   Remove
     removemasks             = getInput('removemasks', varargin, default);
     removelibrarylinks      = getInput('removelibrarylinks', varargin, default);
-    removemodelreferences   = getInput('removemodereferences', varargin, default); 
+    removemodelreferences   = getInput('removemodelreferences', varargin, 0); 
     removesignalnames       = getInput('removesignalnames', varargin, default);
     removedocblocks         = getInput('removedocblocks', varargin, default);
     removeannotations       = getInput('removeannotations', varargin, default);
@@ -64,7 +67,7 @@ function obfuscateModel(sys, parentSys, varargin)
     recursemodels           = getInput('recursemodels', varargin, default);
     
     %% Recurse Model References
-    if recursemodels
+    if ~removemodelreferences && recursemodels
         refs = find_system(sys, 'BlockType', 'ModelReference');
         if ~isempty(refs)
             for i = 1:length(refs)
@@ -85,7 +88,7 @@ function obfuscateModel(sys, parentSys, varargin)
     end
     
     if removelibrarylinks
-        removeLinks(sys)
+        removeLibraryLinks(sys)
     end
     
     if removemodelreferences

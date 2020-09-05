@@ -3,7 +3,7 @@ function removeModelReferences(sys)
 
     blocks = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'type', 'block');
     for i = 1:length(blocks)
-
+        
         if strcmp(get_param(blocks(i), 'BlockType'), 'ModelReference')
             try
                 % Reset parameter values
@@ -14,7 +14,6 @@ function removeModelReferences(sys)
             try
                 set_param(blocks(i), 'ModelName', '<Enter Model Name>');
             catch
-            end
             end
         end
     end
