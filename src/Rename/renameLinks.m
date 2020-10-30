@@ -3,7 +3,6 @@ function renameLinks(sys)
 
     blocks = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'type', 'block', 'BlockType', 'Reference'); 
     for i = 1:length(blocks)
-        set_param(blocks(i), 'Name', ['Link' num2str(i)]);
         set_param(blocks(i), 'ShowName', 'on');
         try
             set_param(blocks(i), 'HideAutomaticName', 'off');

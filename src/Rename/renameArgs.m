@@ -1,5 +1,6 @@
 function renameArgs(sys, parentSys)
-% RENAMEARGS Give all Simulink Function arguments generic names
+% RENAMEARGS Give all Simulink Function arguments generic names.
+
     allArgIns   = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', ...
                              'BlockType', 'ArgIn');
     allArgOuts  = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', ...
@@ -14,7 +15,6 @@ function renameArgs(sys, parentSys)
         while ~changed
             try
                 newName = ['u' num2str(num)];
-                set_param(allArgIns(i), 'Name', newName);
                 set_param(allArgIns(i), 'ArgumentName', newName);
                 changed = true;
             catch
@@ -36,7 +36,6 @@ function renameArgs(sys, parentSys)
         while ~changed
             try
                 newName = ['y' num2str(num)];
-                set_param(allArgOuts(j), 'Name', newName);
                 set_param(allArgOuts(j), 'ArgumentName', newName);
                 changed = true;
             catch

@@ -46,13 +46,10 @@ function obfuscateModel(sys, parentSys, varargin)
     removecolorannotations  = getInput('removecolorannotations', varargin, default);
     
     %   Rename
-    renamesubsystems        = getInput('renamesubsystems', varargin, default);
-    renameports             = getInput('renameports', varargin, default);
+    renameblocks            = getInput('renameblocks', varargin, default); 
     renameconstants         = getInput('renameconstants', varargin, default);
-    renamegotofromname      = getInput('renamegotofromname', varargin, default);
     renamegotofromtag       = getInput('renamegotofromtag', varargin, default);
     renamedatastorename     = getInput('renamedatastorename', varargin, default);
-    renametriggers          = getInput('renametriggers', varargin, default); 
     renamearguments         = getInput('renamearguments', varargin, default);
     renamefunctions         = getInput('renamefunctions', varargin, default);
     
@@ -130,12 +127,8 @@ function obfuscateModel(sys, parentSys, varargin)
     %removeCustomDataTypes(sys)  % will probably affect functionality
 
     % Rename
-    if renamesubsystems
-        renameSubsystems(sys)
-    end
-    
-    if renameports
-        renamePorts(sys)
+    if renameblocks
+        renameBlocks(sys)
     end
     
     if renameconstants
@@ -146,16 +139,8 @@ function obfuscateModel(sys, parentSys, varargin)
         renameGotoTags(sys)
     end
     
-    if renamegotofromname
-        renameGotos(sys)
-    end
-    
     if renamedatastorename
         renameDSs(sys)
-    end
-    
-    if renametriggers
-        renameTriggers(sys);
     end
     
     if renamearguments
