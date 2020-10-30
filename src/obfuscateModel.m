@@ -53,6 +53,12 @@ function obfuscateModel(sys, parentSys, varargin)
     renamearguments         = getInput('renamearguments', varargin, default);
     renamefunctions         = getInput('renamefunctions', varargin, default);
     
+    %   Hide
+    hideblocknames          = getInput('hideblocknames', varargin, default);
+    hidesignalpropagation   = getInput('hidesignalpropagation', varargin, default);
+    hidecontentpreview      = getInput('hidecontentpreview', varargin, default);
+    hideportlabels          = getInput('hideportlabels', varargin, default);
+    
     % Stateflow
     sfcharts                = getInput('sfcharts', varargin, default);
     sfports                 = getInput('sfports', varargin, default);
@@ -152,6 +158,23 @@ function obfuscateModel(sys, parentSys, varargin)
     end
     
     renameStateflow(sys, 'sfcharts', sfcharts, 'sfports', sfports, 'sfevents', sfevents, 'sfstates', sfstates, 'sfboxes', sfboxes);
+    
+    % Hide
+    if hideblocknames
+        hideBlockNames(sys);
+    end
+    
+    if hidesignalpropagation
+        hideSignalPropagation(sys);
+    end
+          
+    if hidecontentpreview
+        hideContentPreview(sys);
+    end
+    
+    if hideportlabels
+        hidePortLabels(sys);
+    end
     
     %renameLinks(sys)
 end
