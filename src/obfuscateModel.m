@@ -29,6 +29,10 @@ function obfuscateModel(sys, parentSys, varargin)
         parentSys = [];
     end
     
+    if strcmp(get_param(sys, 'Lock'), 'on')
+        error('Model must be unlocked.');
+    end
+    
     %% Manage parameters
     % Simulink
     %   Remove
