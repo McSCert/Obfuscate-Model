@@ -3,6 +3,7 @@ function renameBlocks(sys)
     
     blks = find_system(sys, 'FollowLinks', 'on', 'Type', 'Block');
     blks_hdl = get_param(blks, 'Handle');
+    blks_hdl = [blks_hdl{:}]; % Convert to numeric
     blks_parent = get_param(blks, 'Parent');
     
     blks_rename = cell(size(blks));
@@ -54,13 +55,13 @@ function renameBlocks(sys)
     % Rename
     for j = 1:length(blks)
         try
-            set_param(blks_hdl{j}, 'Name', blks_rename{j});
+            set_param(blks_hdl(j), 'Name', blks_rename{j});
         catch ME
             if strcmp(ME.identifier, 'Simulink:blocks:DupBlockName')
                 % Block with thame name already exists
-                parent = get_param(blks_hdl{j}, 'Parent');
+                parent = get_param(blks_hdl(j), 'Parent');
                 set_param([parent '/' blks_rename{j}], 'Name', [blks_rename{j} '_temp']);
-                set_param(blks_hdl{j}, 'Name', blks_rename{j});
+                set_param(blks_hdl(j), 'Name', blks_rename{j});
             else
                 warning(['Could not rename block ' blks{j}]);
             end
