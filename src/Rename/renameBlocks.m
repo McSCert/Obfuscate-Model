@@ -13,8 +13,7 @@ function renameBlocks(sys)
     blks_type = get_param(blks, 'BlockType');
     for h = 1:length(blks_type)
        if strcmp(blks_type{h}, 'SubSystem')
-           
-          
+            
            sfBlockType = '';
            try 
                sfBlockType = get_param(blks{h}, 'SFBlockType');
@@ -27,8 +26,7 @@ function renameBlocks(sys)
            else
                % Subsystem
                blks_type{h} = getSubsystemType(blks_hdl(h));
-           end
-           
+           end   
        end
     end
     
@@ -49,7 +47,6 @@ function renameBlocks(sys)
 
         suffix = numDuplicates + 1; % Increment suffix so the names aren't the same
         blks_rename{i} = [blks_type{i} num2str(suffix)];
-
     end
     
     % Rename
