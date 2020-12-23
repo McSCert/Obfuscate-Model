@@ -7,7 +7,7 @@
 \newcommand{\ring}[1] {\textsf{#1}} 	 % Use for files names and paths
 \newcommand{\keyword}[1] {\texttt{#1}} % Use for keywords of programming languages, e.g., \keyword{while}
 \newcommand{\file}[1] {\texttt{#1}} 	 % Use for files names and paths
-\newcommand{\param}[1] {\textsf{#1}}   % Use for block parameter names, e.g., \param{BlockType}
+\newcommand{\param}[1] {\textit{#1}}   % Use for block parameter names, e.g., \param{BlockType}
 
 % Matlab Products
 \newcommand{\matlab}{\textsc{Matlab}\@\xspace}
@@ -44,6 +44,8 @@
 
 \newcommand{\simfunc}{\block{Simulink Function}\@\xspace}
 \newcommand{\simfunccaller}{\block{Function Caller}\@\xspace}
+\newcommand{\argin}{ArgIn\@\xspace}
+\newcommand{\argout}{ArgOut\@\xspace}
 
 \newcommand{\toworkspace}{\block{To Workspace}\@\xspace}
 \newcommand{\fromworkspace}{\block{From Workspace}\@\xspace}
@@ -86,7 +88,6 @@
 \newcommand{\vrsa}{\textrm{vice versa}\@\xspace}
 
 % Symbols
-
 \usepackage{amssymb}
 \newcommand{\checkbox}{\makebox[0pt][l]{$\square$}\raisebox{.15ex}{\hspace{0.1em}$\checkmark$}}%
 \newcommand{\uncheckbox}{$\square$~}%
