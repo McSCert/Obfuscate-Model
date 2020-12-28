@@ -59,7 +59,6 @@ function obfuscateModel(sys, parentSys, varargin)
     
     %   Hide
     hideblocknames          = getInput('hideblocknames', varargin, default);
-    hidesignalpropagation   = getInput('hidesignalpropagation', varargin, default);
     hidecontentpreview      = getInput('hidecontentpreview', varargin, default);
     hideportlabels          = getInput('hideportlabels', varargin, default);
     
@@ -166,10 +165,6 @@ function obfuscateModel(sys, parentSys, varargin)
     % Hide
     if hideblocknames
         hideBlockNames(sys);
-    end
-    
-    if hidesignalpropagation
-        hideSignalPropagation(sys);
     end
           
     if hidecontentpreview

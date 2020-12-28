@@ -4,4 +4,4 @@ The Obfuscate Model Tool removes, renames, and/or hides various details of a Sim
 
 *__Disclaimer__: The authors of this tool make no guarantees that all proprietary/confidential information is indeed removed from the Simulink model file. Users should inspect the model to verify that no proprietary/confidential remains.*
 
-<img src="imgs/Cover.PNG" width="650">
+<img src="imgs/Cover.PNG" width="850">
