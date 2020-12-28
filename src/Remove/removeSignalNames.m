@@ -1,6 +1,15 @@
 function removeSignalNames(sys)
 % REMOVESIGNALNAMES Remove signal names and turn off signal propagation.
 % NOTE: This does not work for signals of buses.
+%
+%   Inputs:
+%       sys     Name of Simulink model or subsystem.
+%
+%   Outputs:
+%       N/A
+%
+%   Side Effects:
+%       Removes names and disables signal propagation.
 
     % Lines
     lines = find_system(sys, 'FindAll', 'on', 'FollowLinks', 'on', 'type', 'line');
