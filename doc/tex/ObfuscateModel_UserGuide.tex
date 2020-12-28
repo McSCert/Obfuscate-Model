@@ -71,6 +71,8 @@ The \ToolName removes, renames, and/or hides various details of a \Simulink mode
 % Why is it useful?
 This can be useful for eliminating proprietary details when sending models to third-parties, or even by removing details from models in order to create images suitable for publication.
 
+\paragraph{Disclaimer:} The authors of this tool make no guarantees that all proprietary/confidential information is indeed removed from the Simulink model file. Users should inspect the model to verify that no proprietary/confidential remains according to their needs.
+
 % Is there more information?
 %\subsection*{More Information}
 %For more information about ..., an interested reader is referred to:
@@ -91,7 +93,7 @@ This section describes what must be done to setup the \ToolName, as well as how 
 \subsection{Prerequisites and Installation}
 
 \begin{enumerate}
-  \item Use \Matlab/\Simulink 2011b or newer.
+  \item Use \Matlab/\Simulink 2018b or newer.
 	\item To install the tool,
 	\begin{enumerate}
 		\item from a \file{.zip} file --- unzip the contents into your desired location. Ensure the unzipped folder and subfolders are present in your \mpath, or add them if they are not present.
@@ -110,13 +112,13 @@ This section describes what must be done to setup the \ToolName, as well as how 
 % How/when do you access the tool?
 %---------------------------------------
 \subsection{Getting Started}
-The tool can launched by double-clicking the \file{ObfuscateModelGUI.mlapp} file, or by running the command \cmd{ObfuscateModelGUI} from the Command Window. This will open the Graphical User Interface (GUI) shown in \figurename~\ref{FIG:contextMenu}.
+The tool can be launched by double-clicking the \file{ObfuscateModelGUI.mlapp} file, or by running the command \cmd{ObfuscateModelGUI} from the Command Window. This will open the Graphical User Interface (GUI) shown in \figurename~\ref{fig:contextMenu}.
 
 \begin{figure}[htb!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{../figs/GUI}
 	\caption{The tool GUI.}
-	\label{FIG:contextMenu}
+	\label{fig:contextMenu}
 \end{figure}
 
 %---------------------------------------
@@ -124,15 +126,19 @@ The tool can launched by double-clicking the \file{ObfuscateModelGUI.mlapp} file
 %---------------------------------------
 \newpage
 \subsection{Functionality}
-This section describes the tool functionality when being used from the GUI (Figure~\ref{FIG:contextMenu}). Each section describes one of the groups of options in the GUI.
+This section describes the tool functionality when being used from the GUI (Figure~\ref{fig:contextMenu}). Each section describes one of the groups of options in the GUI.
+
+\subsubsection{Recurse into Model References}
+This check-box will apply the removing (Section~\ref{lbl:remove}), renaming (Section~\ref{lbl:rename}), and hiding (Section~\ref{lbl:hide}) options inside of any referenced models.
 
 \subsubsection{Remove}
+\label{lbl:remove}
 The options in the \emph{Remove} group will discard elements of the model.
 
 \begin{itemize}
 	\item Masks -- Block \href{https://www.mathworks.com/help/simulink/ug/block-masks.html}{masks} are commonly used to customize the block appearance of custom blocks. This option removes the masks of all blocks. 
 	
-	\item Library Links -- Library \href{https://www.mathworks.com/help/simulink/ug/creating-and-working-with-linked-blocks.html}{links} can be used in a model to reference blocks that reside in other libraries. This option removes (or ``breaks") all library links so that the blocks are stored directly in the model instead of the library. This means that the model is no longer dependant on external libraries.
+	\item Library Links -- Library \href{https://www.mathworks.com/help/simulink/ug/creating-and-working-with-linked-blocks.html}{links} can be used in a model to reference blocks that reside in other libraries. This option removes (or ``breaks") all library links so that blocks are stored directly in the model instead of the library. This means that the model is no longer dependant on external libraries.
 	
 	\item Model References -- The use of a \href{https://www.mathworks.com/help/simulink/slref/model.html}{model} block introduces a reference to another model. This option resets all model reference blocks so that they no longer point to other models. \emph{Note: This may impact the model functionality.}
 	
@@ -146,12 +152,20 @@ The options in the \emph{Remove} group will discard elements of the model.
 	
 	\item Block Callbacks -- Blocks can have custom \href{https://www.mathworks.com/help/simulink/ug/block-callbacks.html}{callbacks}. This option removes all callbacks.
 	
-	\item Model Information -- A \Simulink model stores \href{https://www.mathworks.com/help/simulink/ug/managing-model-versions.html}{information} about itself, such as its creator's name and version number. This option resets this data.
+	\item Model Information -- A \Simulink model stores \href{https://www.mathworks.com/help/simulink/ug/managing-model-versions.html}{information} about itself, such as its creator's name and version number (Figure~\ref{fig:model_history}). This option resets this data.
+	
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=.97\textwidth]{../figs/ModelHistory}
+	\caption{Model Information.}
+	\label{fig:model_history}
+\end{figure}
 	
 	\item Colors -- These options remove the colours of blocks and annotations so that they revert to their default color.
 \end{itemize}
 
 \subsubsection{Rename}
+\label{lbl:rename}
 The options in the \emph{Rename} group will rename elements of the model to use generic names.
 
 \begin{itemize}
@@ -163,14 +177,15 @@ The options in the \emph{Rename} group will rename elements of the model to use 
 	
 	\item Data Store Memory -- A \DSM block has a \param{data store name}. This option renames all  \DSM blocks to be generic (\eg DataStore1) as well as all associated \DSR and \DSW blocks.
 	
-	\item Simulink Function Arguments -- A \simfunc can have inputs and outputs using \argin and \argout blocks. This option renames the \param{argument name} of \argin and \argout blocks to be generic (e.g. u1 for an input, and y1 for an output).
+	\item Simulink Function Arguments -- A \simfunc can have inputs and outputs using \argin and \argout blocks. This option renames the \param{argument name} of \argin and \argout blocks to be generic (\eg u1 for an input, y1 for an output).
 
 	\item Simulink Function Names -- The trigger within a \simfunc specifies the function's name. This option renames it to a generic name (\eg f1), and updates any corresponding \simfunccaller blocks to match.
 	
-	\item Stateflow -- These options rename the various Stateflow elements to generic names.
+	\item Stateflow -- These options rename the various named \href{https://www.mathworks.com/help/stateflow/ug/overview-of-stateflow-objects.html}{Stateflow elements} to have generic names. Currently inputs, outputs, events, boxes, and states are renamed.
 \end{itemize}
 
 \subsubsection{Hide}
+\label{lbl:hide}
 The options in the \emph{Hide} group will hide elements of the model from view.
 
 \begin{itemize}
@@ -195,20 +210,20 @@ The options in the \emph{Hide} group will hide elements of the model from view.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Example}
 
-Use the command \demoName in the \Simulink Command Window to open the example model, shown in Figure~\ref{FIG:demo1}. To run the tool, run the command \cmd{ObfuscateModelGUI} from the Command Window, and then press the \cmd{Obfuscate} button. The resulting model is given in Figure~\ref{FIG:demo2}. We can see that the colors, annotations, masks, names, port labels, and many other elements have been removed from the model.
+Use the command \demoName in the \Simulink Command Window to open the example model, shown in Figure~\ref{fig:demo1}. To run the tool, run the command \cmd{ObfuscateModelGUI} from the Command Window, and then press the \cmd{Obfuscate} button. The resulting model is given in Figure~\ref{fig:demo2}. We can see that the colors, annotations, masks, names, port labels, and many other elements have been removed, renamed, or hidden in the model.
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=\textwidth]{../figs/Demo1}
+	\includegraphics[width=.97\textwidth]{../figs/Demo1}
 	\caption{Original demo model.}
-	\label{FIG:demo1}
+	\label{fig:demo1}
 \end{figure}
 
 \begin{figure}[htb]
 	\centering
-	\includegraphics[width=\textwidth]{../figs/Demo2}
+	\makebox[\textwidth][c]{\includegraphics[width=1.25\textwidth]{../figs/Demo2_annotated}}
 	\caption{Resulting model after obfuscation.}
-	\label{FIG:demo2}
+	\label{fig:demo2}
 \end{figure}
 
 \end{document}
